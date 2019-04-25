@@ -10,12 +10,14 @@ const Square = ({ value, onClick }) => (
 
 const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null))
+  const [isXNext, setIsXNext] = useState(false)
 
   const renderSquare = (i) => {
     const handleClick = (i) => {
       const nextSquares = squares.concat()
-      nextSquares[i] = 'X'
+      nextSquares[i] = isXNext ? 'X' : 'O'
       setSquares(nextSquares)
+      setIsXNext(!isXNext)
     }
     return (
       <Square
