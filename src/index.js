@@ -8,24 +8,13 @@ const Square = ({ value, onClick }) => (
   </button>
 )
 
-const Board = () => {
-  const [squares, setSquares] = useState(Array(9).fill(null))
-  const [isXNext, setIsXNext] = useState(false)
-
-  const renderSquare = (i) => {
-    const handleClick = (i) => {
-      const nextSquares = squares.concat()
-      nextSquares[i] = isXNext ? 'X' : 'O'
-      setSquares(nextSquares)
-      setIsXNext(!isXNext)
-    }
-    return (
-      <Square
-        value={squares[i]}
-        onClick={() => handleClick(i)}
-      />
-    )
-  }
+const Board = ({ squares, handleClick }) => {
+  const renderSquare = (i) => (
+    <Square
+      value={squares[i]}
+      onClick={() => handleClick(i)}
+    />
+  )
 
   const status = 'Next player: X';
   return (
@@ -50,17 +39,32 @@ const Board = () => {
   );
 }
 
-const Game = () => (
-  <div className="game">
-    <div className="game-board">
-      <Board />
+const Game = () => {
+  const [squares, setSquares] = useState(Array(9).fill(null))
+  const [isXNext, setIsXNext] = useState(false)
+
+  const handleClick = (i) => {
+    const nextSquares = squares.concat()
+    nextSquares[i] = isXNext ? 'X' : 'O'
+    setSquares(nextSquares)
+    setIsXNext(!isXNext)
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          squares={squares}
+          handleClick={handleClick}
+        />
+      </div>
+      <div className="game-info">
+        <div>{/* status */}</div>
+        <ol>{/* TODO */}</ol>
+      </div>
     </div>
-    <div className="game-info">
-      <div>{/* status */}</div>
-      <ol>{/* TODO */}</ol>
-    </div>
-  </div>
-)
+  )
+}
 
 // ========================================
 
