@@ -2,23 +2,25 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const Square = () => {
-  const [value, setState] = useState('') //initial value
-  const handleClick = () => {
-    setState('X')
-  }
-  return (
-    <button className="square" onClick={handleClick}>
-      {value}
-    </button>
-  )
-}
+const Square = ({ value, onClick }) => (
+  <button className="square" onClick={onClick}>
+    {value}
+  </button>
+)
 
 const Board = () => {
+  const [squares, setSquares] = useState(Array(9).fill(null))
+
   const renderSquare = (i) => {
+    const handleClick = (i) => {
+      const nextSquares = squares.concat()
+      nextSquares[i] = 'X'
+      setSquares(nextSquares)
+    }
     return (
       <Square
-        number={i}
+        value={squares[i]}
+        onClick={() => handleClick(i)}
       />
     )
   }
